@@ -32,7 +32,6 @@ public class StudentDAOImplementation implements StudentDAO{
 		session.beginTransaction();
 		session.save(stu);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 	}
 
 	
@@ -42,7 +41,6 @@ public class StudentDAOImplementation implements StudentDAO{
 		Query query = session.createQuery("from Students");
 		List<Students> students = (List<Students>)query.list();
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 		return students;
 	}
 	
@@ -56,7 +54,6 @@ public class StudentDAOImplementation implements StudentDAO{
 		session.beginTransaction();
 		Students stu = session.get(Students.class, id);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 		return stu;
 	}
 
@@ -67,7 +64,6 @@ public class StudentDAOImplementation implements StudentDAO{
 		Students stu = (Students)session.get(Students.class, id);
 		session.delete(stu);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 	}
 
 	
@@ -76,7 +72,6 @@ public class StudentDAOImplementation implements StudentDAO{
 		session.beginTransaction();
 		session.update(stu);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 		
 	}
 

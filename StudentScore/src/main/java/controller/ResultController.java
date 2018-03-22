@@ -79,7 +79,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		String creationdate = request.getParameter("creationdate");
 		creationdate = creationdate.replace("T", "");
 		StringBuffer sb = new StringBuffer(); 
-		creationdate = sb.append(creationdate).insert(10, " ").append(":00").toString();
+		creationdate = sb.append(creationdate).insert(10," ").append(":00").toString();
 		res.setCreationdate(Timestamp.valueOf(creationdate));
 		if(sid !=null && !sid.trim().equals("") && cid !=null && cid.trim().equals("")) {
 			rm.updateResult(res);

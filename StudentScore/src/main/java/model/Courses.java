@@ -3,6 +3,7 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -11,9 +12,10 @@ import javax.persistence.Table;
 import model.*;
 
 @Entity
-@Table(name="n_course")
+@Table(name="w_course")
 public class Courses {
 	@Id
+	@Column(length=255)
 	private String courseid;	
 	private String coursename;
 	private int creditnumbers;

@@ -35,7 +35,6 @@ public class CourseDAOImplementation implements CourseDAO{
 		session.beginTransaction();
 		session.save(cou);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 	}
 	
 	public List<Courses> getCourses() {
@@ -44,7 +43,6 @@ public class CourseDAOImplementation implements CourseDAO{
 		Query query = session.createQuery("from Courses");
 		List<Courses> courses = query.list();
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 		return courses;
 	}
 	
@@ -58,7 +56,6 @@ public class CourseDAOImplementation implements CourseDAO{
 		session.beginTransaction();
 		Courses course = (Courses)session.get(Courses.class, id);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 		return course;
 	}
 
@@ -68,7 +65,6 @@ public class CourseDAOImplementation implements CourseDAO{
 		Courses course = session.get(Courses.class, id);
 		session.delete(course);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 	}
 		
 	public void updateCourse(Courses cou) {
@@ -76,7 +72,6 @@ public class CourseDAOImplementation implements CourseDAO{
 		session.beginTransaction();
 		session.update(cou);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 	}
 	
 	/*

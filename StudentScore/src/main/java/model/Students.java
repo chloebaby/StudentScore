@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="n_student")
+@Table(name="w_student")
 public class Students {	
 	private long studentid;
 	private String lastname;
@@ -24,14 +24,12 @@ public class Students {
 	private String address;
 	private String city;
 	private String email;
-	//private Courses course;
-	//private Results results;
 	
 	private Set<Courses> courses = new HashSet<Courses>();	
 	private Set<Results> results = new HashSet<Results>();
 	
 	@ManyToMany(cascade=CascadeType.ALL)	
-	@JoinTable(name="n_result",
+	@JoinTable(name="e_result",
 			joinColumns= {@JoinColumn(name="student_id")},
 			inverseJoinColumns={@JoinColumn(name="course_id")})
 	public Set<Courses> getCourses() {
@@ -62,7 +60,7 @@ public class Students {
 		this.email=email;
 	}
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public long getStudentid() {
 		return studentid;
 	}

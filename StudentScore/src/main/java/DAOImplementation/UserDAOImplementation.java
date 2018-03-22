@@ -19,7 +19,6 @@ public class UserDAOImplementation implements UserDAO{
 		session.beginTransaction();
 		session.save(u);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 	}
 
 	
@@ -29,7 +28,6 @@ public class UserDAOImplementation implements UserDAO{
 		Users u = session.get(Users.class, name);
 		session.delete(u);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 	}
 
 	
@@ -38,7 +36,6 @@ public class UserDAOImplementation implements UserDAO{
 		session.beginTransaction();
 		session.update(u);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 	}
 	
 	public Users userCheck(String name) {
@@ -46,7 +43,6 @@ public class UserDAOImplementation implements UserDAO{
 		session.beginTransaction();
 		Users u =session.get(Users.class, name);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 		return u;
 	}
 

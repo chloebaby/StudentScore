@@ -33,7 +33,6 @@ public class ResultDAOImplementation implements ResultDAO{
 		session.beginTransaction();
 		session.save(res);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 	}
 
 	
@@ -43,7 +42,6 @@ public class ResultDAOImplementation implements ResultDAO{
 		Query query = session.createQuery("from Results");
 		List<Results> results = (List<Results>)query.list();
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 		return results;
 	}
 	
@@ -64,7 +62,6 @@ public class ResultDAOImplementation implements ResultDAO{
 				.setParameter("cou", cou)
 				.uniqueResult();
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 		return result;
 	}
 
@@ -80,7 +77,6 @@ public class ResultDAOImplementation implements ResultDAO{
 		query.setParameter("stu", stu).setParameter("cou", cou);
 		query.executeUpdate();
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 	}
 
 	
@@ -89,7 +85,6 @@ public class ResultDAOImplementation implements ResultDAO{
 		session.beginTransaction();
 		session.update(res);
 		session.getTransaction().commit();
-		HibernateUtil.getSession().close();
 	}
 
 }
