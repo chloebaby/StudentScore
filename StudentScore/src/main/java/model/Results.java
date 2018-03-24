@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 @Entity
-@Table(name="e_result")
+@Table(name="w_result")
 public class Results {
 	private int id;
 	private int semester;
@@ -20,11 +20,10 @@ public class Results {
 	private Timestamp creationdate;
 	private Students student;
 	private Courses course;
-	public Results() {
-		
-	}
+	public Results() {}
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@Column(columnDefinition="int default 0") 
 	public int getId() {
 		return id;
 	}

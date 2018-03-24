@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import interfaceDAO.CourseDAO;
@@ -32,9 +33,20 @@ public class CourseDAOImplementation implements CourseDAO{
 	
 	public void createCourse(Courses cou) {
 		Session session =  HibernateUtil.getSession();
-		session.beginTransaction();
-		session.save(cou);
-		session.getTransaction().commit();
+		Transaction tr = session.beginTransaction();
+		try {
+			if(!tr.isActive()) {
+				tr = session.beginTransaction();
+			}
+			session.save(cou);
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if(tr == null && tr.isActive()) {
+				tr.rollback();
+			}
+		}
+		
 	}
 	
 	public List<Courses> getCourses() {
@@ -61,17 +73,38 @@ public class CourseDAOImplementation implements CourseDAO{
 
 	public void deleteCourse(String id) {
 		Session session = HibernateUtil.getSession();
-		session.beginTransaction();
-		Courses course = session.get(Courses.class, id);
-		session.delete(course);
-		session.getTransaction().commit();
+		Transaction tr = session.beginTransaction();
+		try {
+			if(!tr.isActive()) {
+				tr = session.beginTransaction();				
+			}
+			Courses course = session.get(Courses.class, id);
+			session.delete(course);
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if(tr == null && tr.isActive()) {
+				tr.rollback();
+			}
+		}
+		
 	}
 		
 	public void updateCourse(Courses cou) {
 		Session session = HibernateUtil.getSession();
-		session.beginTransaction();
-		session.update(cou);
-		session.getTransaction().commit();
+		Transaction tr = session.beginTransaction();
+		try {
+			if(!tr.isActive()) {
+				tr = session.beginTransaction();
+			}
+			session.update(cou);
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if(tr == null && tr.isActive()) {
+				tr.rollback();
+		}
+		
 	}
 	
 	/*
@@ -123,7 +156,5 @@ public class CourseDAOImplementation implements CourseDAO{
 			e.printStackTrace();
 		}
 	}*/
-
-
-
+ }
 }

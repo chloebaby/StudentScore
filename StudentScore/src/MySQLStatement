@@ -1,0 +1,7 @@
+create table w_result(
+id int not null primary key auto_increment,
+student_id bigint references w_student(studentid),
+course_id varchar(255) references w_course(courseid),
+marks double,
+semester int(11),
+creationdate timestamp);

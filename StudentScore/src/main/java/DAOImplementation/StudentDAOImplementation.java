@@ -17,8 +17,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import interfaceDAO.StudentDAO;
 import model.*;
@@ -29,19 +31,30 @@ public class StudentDAOImplementation implements StudentDAO{
 			
 	public void createStudent(Students stu) {
 		Session session  = HibernateUtil.getSession();
-		session.beginTransaction();
-		session.save(stu);
-		session.getTransaction().commit();
+		Transaction tr = session.beginTransaction();
+		try {
+			if(!tr.isActive()) {
+				tr = session.beginTransaction();
+			}
+			session.save(stu);
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if(tr == null && tr.isActive()) {
+				tr.rollback();
+			}
+		}
 	}
 
 	
 	public List<Students> getStudents() {
 		Session session  = HibernateUtil.getSession();
-		session.beginTransaction();		
+		session.beginTransaction();	
 		Query query = session.createQuery("from Students");
 		List<Students> students = (List<Students>)query.list();
 		session.getTransaction().commit();
 		return students;
+		
 	}
 	
 //	public List<Students> getStudents(int pageNo, int pageSize) {
@@ -60,19 +73,40 @@ public class StudentDAOImplementation implements StudentDAO{
 	
 	public void deleteStudent(long id) {
 		Session session  = HibernateUtil.getSession();
-		session.beginTransaction();
+		Transaction tr = session.beginTransaction();
+		try {
+			if(!tr.isActive()) {
+				tr = session.beginTransaction();
+			}
 		Students stu = (Students)session.get(Students.class, id);
 		session.delete(stu);
 		session.getTransaction().commit();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			if(tr == null && tr.isActive()) {
+				tr.rollback();
+			}
+		}
 	}
 
 	
 	public void updateStudent(Students stu) {
 		Session session  = HibernateUtil.getSession();
-		session.beginTransaction();
-		session.update(stu);
-		session.getTransaction().commit();
-		
+		Transaction tr = session.beginTransaction();
+		try {
+			if(!tr.isActive()) {
+				tr = session.beginTransaction();	
+			}
+			session.update(stu);
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if(tr == null && tr.isActive()) {
+				tr.rollback();
+			}
+			
+		}
 	}
 
 }

@@ -53,7 +53,7 @@
 		<tr>
 			<td>Creation Date:</td>
  			<td> 
- 				<input type="datetime-local" name="creationdate" value="${result.creationdate }" >
+ 				<input type="datetime-local" name="creationdate" value="${result.creationdate}" >
  			</td> 
 				
 		<tr>

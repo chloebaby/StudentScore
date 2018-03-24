@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import interfaceDAO.ResultDAO;
@@ -30,9 +31,21 @@ public class ResultDAOImplementation implements ResultDAO{
 	
 	public void createResult(Results res) {
 		Session session = HibernateUtil.getSession();
-		session.beginTransaction();
-		session.save(res);
-		session.getTransaction().commit();
+		Transaction tr = session.beginTransaction();
+		try {
+			if(!tr.isActive()) {
+				tr = session.beginTransaction();
+			}
+			session.save(res);
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if(tr == null && tr.isActive()) {
+				tr.rollback();
+			}
+		}
+		
+		
 	}
 
 	
@@ -68,23 +81,47 @@ public class ResultDAOImplementation implements ResultDAO{
 	
 	public void deleteResult(long sid,String cid) {
 		Session session = HibernateUtil.getSession();
-		session.beginTransaction();
+		Transaction tr = session.beginTransaction();
 		Students stu = new Students();
 		stu.setStudentid(sid);
 		Courses cou = new Courses();
 		cou.setCourseid(cid);
-		Query query = session.createQuery("delete Results r where r.student = :stu and r.course = :cou");
-		query.setParameter("stu", stu).setParameter("cou", cou);
-		query.executeUpdate();
-		session.getTransaction().commit();
+		try {
+			if(!tr.isActive()) {
+				tr = session.beginTransaction();
+			}
+			Query query = session.createQuery("delete Results r where r.student = :stu and r.course = :cou");
+			query.setParameter("stu", stu).setParameter("cou", cou);
+			query.executeUpdate();
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if(tr == null && tr.isActive()) {
+				tr.rollback();
+			}
+		}
+		
+		
+		
 	}
 
 	
 	public void updateResult(Results res) {
 		Session session = HibernateUtil.getSession();
-		session.beginTransaction();
-		session.update(res);
-		session.getTransaction().commit();
+		Transaction tr = session.beginTransaction();
+		try {
+			if(!tr.isActive()) {
+				tr = session.beginTransaction();
+			}
+			session.update(res);
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if(tr == null && tr.isActive()) {
+				tr.rollback();
+			}
+		}
+		
 	}
 
 }

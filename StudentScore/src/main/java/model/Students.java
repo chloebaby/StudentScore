@@ -29,9 +29,9 @@ public class Students {
 	private Set<Results> results = new HashSet<Results>();
 	
 	@ManyToMany(cascade=CascadeType.ALL)	
-	@JoinTable(name="e_result",
-			joinColumns= {@JoinColumn(name="student_id")},
-			inverseJoinColumns={@JoinColumn(name="course_id")})
+	@JoinTable(name="w_result",
+			joinColumns= {@JoinColumn(name="student_id",referencedColumnName="studentid")},
+			inverseJoinColumns={@JoinColumn(name="course_id",referencedColumnName="courseid")})
 	public Set<Courses> getCourses() {
 		return courses;
 	}

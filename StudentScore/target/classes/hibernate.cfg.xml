@@ -20,7 +20,6 @@
     <property name="current_session_context_class">thread</property>
     <!-- Drop and re-create the database schema on startup -->
     <property name="hbm2ddl.auto">update</property>
-<!--<mapping resource="person.hbm.xml"/> -->
 	<mapping class="model.Students"/>
 	<mapping class="model.Courses"/>
 	<mapping class="model.Results"/>

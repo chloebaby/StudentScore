@@ -22,6 +22,7 @@
 			
 <!-- 			</td> -->
 <!-- 		</tr> -->
+	<input type="hidden" name="studentid" value="${student.studentid}" />
 		<tr>
 			<td>Last Name:</td>
 			<td>

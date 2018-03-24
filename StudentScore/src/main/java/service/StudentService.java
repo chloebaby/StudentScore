@@ -62,7 +62,7 @@ public class StudentService {
 	public void deleteStudent(long id) {
 		stuDAO.deleteStudent(id);
 	}
-	public void updateStudent(Students stu) {
+	public void updateStudent(Students stu) {		
 		stuDAO.updateStudent(stu);
 	}
 	public void exportInfo(String dir) {}

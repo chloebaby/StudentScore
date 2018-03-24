@@ -67,26 +67,36 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String sid = request.getParameter("studentid");
 		String cid = request.getParameter("courseid");
-		Results res = new Results();
-		Students stu = new Students();
-		Courses cou = new Courses();		
-		stu.setStudentid(Long.valueOf(sid));
-		cou.setCourseid(cid);		
-		res.setStudent(stu);
-		res.setCourse(cou);
-		res.setSemester(Integer.valueOf(request.getParameter("semester")));
-		res.setMarks(Double.valueOf(request.getParameter("marks")));
-		String creationdate = request.getParameter("creationdate");
-		creationdate = creationdate.replace("T", "");
-		StringBuffer sb = new StringBuffer(); 
-		creationdate = sb.append(creationdate).insert(10," ").append(":00").toString();
-		res.setCreationdate(Timestamp.valueOf(creationdate));
-		if(sid !=null && !sid.trim().equals("") && cid !=null && cid.trim().equals("")) {
-			rm.updateResult(res);
-		}else {
+		Results res = null;
+		Students stu = null;
+		Courses cou = null;
+		res = rm.getResultById(Long.valueOf(sid), cid);
+		stu = sm.getStudentById(Long.valueOf(sid));
+		cou = cm.getCourseById(cid);
+		if(res == null) {
+			res = new Results();
+			res.setSemester(Integer.valueOf(request.getParameter("semester")));
+			res.setMarks(Double.valueOf(request.getParameter("marks")));
+			String creationdate = request.getParameter("creationdate");
+			creationdate = creationdate.replace("T", "");
+			StringBuffer sb = new StringBuffer(); 
+			creationdate = sb.append(creationdate).insert(10," ").append(":00").toString();
+			res.setCreationdate(Timestamp.valueOf(creationdate));
+			res.setStudent(stu);
+			res.setCourse(cou);
 			rm.createResult(res);
-		}
-		
+		}else {
+			res.setSemester(Integer.valueOf(request.getParameter("semester")));
+			res.setMarks(Double.valueOf(request.getParameter("marks")));
+			String creationdate = request.getParameter("creationdate");
+			creationdate = creationdate.replace("T", "");
+			StringBuffer sb = new StringBuffer(); 
+			creationdate = sb.append(creationdate).insert(10," ").append(":00").toString();
+			res.setCreationdate(Timestamp.valueOf(creationdate));
+			res.setStudent(stu);
+			res.setCourse(cou);
+			rm.updateResult(res);
+		}	
 		request.setAttribute("results", rm.getResults());		
 		request.getRequestDispatcher(LIST).forward(request, response);
 		

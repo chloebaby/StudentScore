@@ -49,7 +49,7 @@
         </span>
         <div style=display:inline >
         
-            <iframe id="iframePosition" name="iframePosition" width= "1900px" height="500px" src="" ></iframe>
+            <iframe id="iframePosition" name="iframePosition" width= "1000px" height="500px" src="" ></iframe>
         </div>
        
 	</body>
